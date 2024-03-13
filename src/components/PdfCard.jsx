@@ -2,8 +2,9 @@ import React from "react";
 import { CgFileDocument } from "react-icons/cg";
 import { HiOutlineDownload, HiOutlinePrinter } from "react-icons/hi";
 import { FiShare2 } from "react-icons/fi";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
+import { saveAs } from "file-saver";
 
 const PdfCard = ({ title }) => {
   const styles = {
@@ -33,6 +34,14 @@ const PdfCard = ({ title }) => {
       userSelect: "none",
     },
   };
+
+  const handleShare = async (blob) => {
+    await saveAs(blob, `invoice.pdf`);
+    window.location.href = `mailto:?subject=${encodeURIComponent(
+      `Invoice`
+    )}&body=${encodeURIComponent(`Kindly find attached invoice`)}`;
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.flex}>
@@ -52,14 +61,23 @@ const PdfCard = ({ title }) => {
           </div>
         </PDFDownloadLink>
 
-        <div style={styles.btn}>
-          <HiOutlinePrinter size={14} />
-          <span>Print</span>
-        </div>
-        <div style={styles.btn}>
-          <FiShare2 size={14} />
-          <span>Share</span>
-        </div>
+        <BlobProvider document={<Invoice />}>
+          {({ url, blob }) => (
+            <a href={url} target="_blank" style={styles.btn}>
+              <HiOutlinePrinter size={14} />
+              <span>Print</span>
+            </a>
+          )}
+        </BlobProvider>
+
+        <BlobProvider document={<Invoice />}>
+          {({ url, blob }) => (
+            <div style={styles.btn} onClick={() => handleShare(url, blob)}>
+              <FiShare2 size={14} />
+              <span>Share</span>
+            </div>
+          )}
+        </BlobProvider>
       </div>
     </div>
   );

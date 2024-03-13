@@ -1,7 +1,4 @@
-import { PDFViewer } from "@react-pdf/renderer";
-import Invoice from "./components/Invoice";
 import PdfCard from "./components/PdfCard";
-import "./App.css";
 
 function App() {
   const cards = {

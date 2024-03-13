@@ -7,9 +7,10 @@ import {
   Document,
   StyleSheet,
 } from "@react-pdf/renderer";
+import logo from "../Logo.png";
 
 const Invoice = () => {
-  const recieptData = {
+  const reciept_data = {
     id: "642be0b4bbe5d71a5341dfb1",
     invoice_no: "20200669",
     address: "739 Porter Avenue, Cade, Missouri, 1134",
@@ -47,6 +48,7 @@ const Invoice = () => {
       },
     ],
   };
+
   const styles = StyleSheet.create({
     page: {
       fontSize: 11,
@@ -116,21 +118,23 @@ const Invoice = () => {
 
     tbody2: { flex: 2, borderRightWidth: 1 },
   });
-  const InvoiceTitle = () => {
+
+  const InvoiceTitle = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
-        {/* <Image style={styles.logo} src={logo} /> */}
+        <Image style={styles.logo} src={logo} />
         <Text style={styles.reportTitle}>Xpress Enterprises</Text>
       </View>
-    </View>;
-  };
-  const Address = () => {
+    </View>
+  );
+
+  const Address = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
         <View>
           <Text style={styles.invoice}>Invoice </Text>
           <Text style={styles.invoiceNumber}>
-            Invoice number: {recieptData.invoice_no}{" "}
+            Invoice number: {reciept_data.invoice_no}{" "}
           </Text>
         </View>
         <View>
@@ -139,22 +143,22 @@ const Invoice = () => {
           <Text style={styles.addressTitle}>Lagos, Nigeria.</Text>
         </View>
       </View>
-    </View>;
-  };
+    </View>
+  );
 
-  const UserAddress = () => {
+  const UserAddress = () => (
     <View style={styles.titleContainer}>
       <View style={styles.spaceBetween}>
         <View style={{ maxWidth: 200 }}>
           <Text style={styles.addressTitle}>Bill to </Text>
-          <Text style={styles.address}>{recieptData.address}</Text>
+          <Text style={styles.address}>{reciept_data.address}</Text>
         </View>
-        <Text style={styles.addressTitle}>{recieptData.date}</Text>
+        <Text style={styles.addressTitle}>{reciept_data.date}</Text>
       </View>
-    </View>;
-  };
+    </View>
+  );
 
-  const TableHead = () => {
+  const TableHead = () => (
     <View style={{ width: "100%", flexDirection: "row", marginTop: 10 }}>
       <View style={[styles.theader, styles.theader2]}>
         <Text>Items</Text>
@@ -168,11 +172,11 @@ const Invoice = () => {
       <View style={styles.theader}>
         <Text>Amount</Text>
       </View>
-    </View>;
-  };
+    </View>
+  );
 
-  const TableBody = () => {
-    recieptData.items.map((receipt) => (
+  const TableBody = () =>
+    reciept_data.items.map((receipt) => (
       <Fragment key={receipt.id}>
         <View style={{ width: "100%", flexDirection: "row" }}>
           <View style={[styles.tbody, styles.tbody2]}>
@@ -190,9 +194,8 @@ const Invoice = () => {
         </View>
       </Fragment>
     ));
-  };
 
-  const TableTotal = () => {
+  const TableTotal = () => (
     <View style={{ width: "100%", flexDirection: "row" }}>
       <View style={styles.total}>
         <Text></Text>
@@ -205,14 +208,15 @@ const Invoice = () => {
       </View>
       <View style={styles.tbody}>
         <Text>
-          {recieptData.items.reduce(
+          {reciept_data.items.reduce(
             (sum, item) => sum + item.price * item.qty,
             0
           )}
         </Text>
       </View>
-    </View>;
-  };
+    </View>
+  );
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
