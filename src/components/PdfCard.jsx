@@ -35,6 +35,12 @@ const PdfCard = ({ title }) => {
     },
   };
 
+  // The encodeURIComponent() function encodes a URI by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character
+  // Encodes characters such as ?,=,/,&,:
+  // console.log(`?x=${encodeURIComponent('test?')}`);
+  // Expected output: "?x=test%3F"
+  // console.log(`?x=${encodeURIComponent('шеллы')}`);
+  // Expected output: "?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B"
   const handleShare = async (blob) => {
     await saveAs(blob, `invoice.pdf`);
     window.location.href = `mailto:?subject=${encodeURIComponent(
@@ -61,6 +67,7 @@ const PdfCard = ({ title }) => {
           </div>
         </PDFDownloadLink>
 
+        {/*The `<BlobProvider>` component in the provided code snippet is responsible for generating a Blob (Binary Large Object) from the content provided in the `document` prop, which in this case is the `<Invoice />` component. */}
         <BlobProvider document={<Invoice />}>
           {({ url, blob }) => (
             <a href={url} target="_blank" style={styles.btn}>
